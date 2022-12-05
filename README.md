@@ -24,26 +24,17 @@ The given assignment is performed on Google Cloud VM which supports nested virtu
 
 ## Question 2: (Steps involved to complete assignment)
 1) Downloaded the source code from [official kernel website](https://www.kernel.org/).
-    ```
     sudo apt-get install wget
     wget https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.0.7.tar.xz
-    ```
-
-2) Extracted the source code from
-    ```
+  
+2)The source code has been extracted from
     tar xvf linux-6.0.7.tar.xz
-    ```
-
-3) Installing all the required packages before building the kernel.
-    ```
+  
+3) Before building the kernel, install all of the required 
     sudo apt-get install git fakeroot build-essential ncurses-dev xz-utils libssl-dev bc flex libelf-dev bison
-    ```
 
-4) Configured the kernel by copying the existing configuration file to a `.config` file
-    ```
-    cd linux-6.0.7
+4) Set up the kernel by copying the existing configuration file to a.config file.    cd linux-6.0.7
     cp -v /boot/config-$(uname -r) .config
-    ```
 
 5) Building the kernel from below commands:
     - `sudo make modules`
@@ -76,55 +67,43 @@ The given assignment is performed on Google Cloud VM which supports nested virtu
   
 10)An nested VM was built within the GCP VM to test the capability. The following are the steps to creating a nested 
     - Download the Ubuntu cloud image`.img`(QEMU compatible image) file from this [ubuntu cloud images site] in GCP VM(https://cloud-images.ubuntu.com/).
-    ```
     wget https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img
-    ```
     - Install the required qemu packages
-    ```
     sudo apt update && sudo apt install qemu-kvm -y
-    ```
     -Move to the directory where .img file is downloaded. This ubuntu cloud image does not come with a default password for the vm. So, to change the password and login into the vm, perform these following steps(terminal):
-    ```
     1)  sudo apt-get install cloud-image-utils
-
     2)  cat >user-data <<EOF
         #cloud-config
         password: newpass #new password here
         chpasswd: { expire: False }
         ssh_pwauth: True
         EOF
-
     3)  cloud-localds user-data.img user-data
-    ```
     - Now, to run this ubuntu image, execute this:
-    ```
     sudo qemu-system-x86_64 -enable-kvm -hda bionic-server-cloudimg-amd64.img -drive "file=user-data.img,format=raw" -m 512 -curses -nographic
-    ```
 
     - **username**: `ubuntu`
     - **password**: `newpass`
 
     - Now, in order to test the functionality, we require the cpuid utility 
-    ```
     sudo apt-get update
     sudo apt-get install cpuid
-    ```
 
-  - NOTE: Make sure two terminals are open:
+ 
       - the GCP VM terminal(T1)
       - the nested VM terminal(logged in)(T2)
 
 <br />
 
-11) Testing the CPUID functionality for `%eax=0x4ffffffc`
-  - T2: `sudo cpuid -l 0x4ffffffc`
-    ![](./images/t21.png)
+11) Testing the CPUID functionality for `%eax=0x4FFFFFFC`
+  - T2: `sudo cpuid -l 0x4FFFFFFC`
+
   - T1: `sudo dmesg` 
-    ![](./images/t11.png)
+
    
-12)  Testing the CPUID functionality for `%eax=0x4ffffffd`
-  - T2: `sudo cpuid -l 0x4ffffffd`
-    ![](./images/t22.png)
+12)  Testing the CPUID functionality for `%eax=0x4FFFFFFD`
+  - T2: `sudo cpuid -l 0x4FFFFFFD`
+ 
   - T1: `sudo dmesg` 
-    ![](./images/t12.png)
+   
   
