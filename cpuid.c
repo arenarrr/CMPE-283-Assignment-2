@@ -1472,12 +1472,12 @@ bool kvm_cpuid(struct kvm_vcpu *vcpu, u32 *eax, u32 *ebx,
 EXPORT_SYMBOL_GPL(kvm_cpuid);
 
 //EXPORT SYMBOL
-u64 total_cycle
+u64 TOTAL_CYCLE
 //TOTAL CYCLE
-EXPORT_SYMBOL(total_cycle);
+EXPORT_SYMBOL(TOTAL_CYCLE);
 //TOTAL
-u32 total_exit;
-EXPORT_SYMBOL(total_exit);
+u32 TOTAL_EXIT;
+EXPORT_SYMBOL(TOTAL_EXIT);
 //TOTAL EXIT
 int kvm_emulate_cpuid(struct kvm_vcpu *vcpu)
 {
@@ -1495,7 +1495,7 @@ int kvm_emulate_cpuid(struct kvm_vcpu *vcpu)
 		ecx = CYCLE_COUNT & 0xFFFFFFF
 		ebx = (CYCLE_COUNT >> 32) & 0xFFFFFFFC;
 		//CYCLE COUNT
-		printk(KERN_INFO "*** CPUID(0x4FFFFFFD) ***\n\tTotal Cycle COUNT : %lld\n\tEBX=%u & ECX=%u", total_cycles, ebx, ecx);
+		printk(KERN_INFO "*** CPUID(0x4FFFFFFD) ***\n\tTotal Cycle COUNT : %lld\n\tEBX=%u & ECX=%u", TOTAL_CYCLE, ebx, ecx);
 	}else {
 		kvm_cpuid(vcpu, &eax, &ebx, &ecx, &edx, false);
 	}
